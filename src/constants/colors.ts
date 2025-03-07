@@ -1,0 +1,8 @@
+export const COLORS = {
+    "dark-indigo": "#08213f",
+    "gray-cyan": "#547b92",
+    "background": "#0a0a0a",
+    "neutral": "#ededed",
+    "gray": "#b4b4b4",
+    "indigo-blue-gradient": "linear-gradient(90deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%)",
+}
