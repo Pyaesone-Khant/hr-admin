@@ -10,12 +10,12 @@
 	--color-background: #0a0a0a;
 	--color-neutral: #ededed;
 	--color-gray: #b4b4b4;
-	--color-indigo-blue-gradient: linear-gradient(90deg,hsla(213, 77%, 14%, 1) 0%,hsla(202, 27%, 45%, 1) 100%);
+	--color-indigo-blue-gradient: var(--indigo-blue-gradient);
+	--color-danger: var(--danger)
 }
 
 * {
 	font-family: 'Raleway', sans-serif;
-	font-weight: 400;
 }
 
 body {

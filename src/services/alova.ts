@@ -8,16 +8,26 @@ export const alovaInstance = createAlova({
     baseURL: BASE_URL,
     timeout: 5000,
     requestAdapter: adapterFetch(),
-    responded: (response) => response.json(),
-    cacheFor: {
-        GET: 1000 * 60 * 5, // 5 minutes
+    responded: async (response) => {
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "API request failed");
+        }
+        return response.json();
     },
+    cacheFor: null,
     statesHook: reactHook,
     beforeRequest: (method) => {
-        const token = localStorage.getItem("token") !== null ? JSON.parse(localStorage.getItem("token") as string) : null;
-
-        if (token !== null && "accessToken" in token) {
-            method.config.headers.Authorization = `Bearer ${token.accessToken}`;
+        const tokenStr = localStorage.getItem("token");
+        if (tokenStr) {
+            try {
+                const token = JSON.parse(tokenStr);
+                if (token?.accessToken) {
+                    method.config.headers.Authorization = `Bearer ${token.accessToken}`;
+                }
+            } catch (error) {
+                console.error("Failed to parse token:", error);
+            }
         }
     }
 })

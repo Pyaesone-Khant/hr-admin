@@ -17,11 +17,11 @@ export function MainLayout() {
             >
                 <Sidebar />
                 <section
-                    className="w-full flex flex-col "
+                    className="w-full flex flex-col"
                 >
                     <Header />
                     <div
-                        className="p-8 flex-1"
+                        className="p-8 flex-1 text-neutral"
                     >
                         <Outlet />
                     </div>

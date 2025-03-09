@@ -5,4 +5,5 @@ export const COLORS = {
     "neutral": "#ededed",
     "gray": "#b4b4b4",
     "indigo-blue-gradient": "linear-gradient(90deg, hsla(213, 77%, 14%, 1) 0%, hsla(202, 27%, 45%, 1) 100%)",
+    "danger": "#ff4d4f",
 }

@@ -10,7 +10,15 @@
 .ant-menu {
 	border: none !important;
 
-	.ant-menu-item {
+	.ant-menu-item.ant-menu-item-danger{
+
+		.ant-menu-title-content, .ant-menu-item-icon{
+			color: var(--danger);
+		}
+	}
+
+
+	.ant-menu-item{
 		border-radius: 0;
 		padding-block: 0 !important;
 		height: 56px;
@@ -74,7 +82,7 @@
 /* Form */
 .ant-form-item{
 	.ant-form-item-label label{
-		color: var(--neutral);
+		color: var(--dark-indigo);
 		font-size: 15;
 	}
 }

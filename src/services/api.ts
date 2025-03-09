@@ -1,16 +1,25 @@
-import { Alova, AlovaGenerics } from "alova";
+import { Alova, AlovaDefaultCacheAdapter, AlovaGenerics } from "alova";
+import { FetchRequestInit } from "alova/fetch";
 
-export const createApi = (apiInstance: Alova<AlovaGenerics>) => {
+export const createApi = (apiInstance: Alova<AlovaGenerics<any, any, FetchRequestInit, Response, Headers, AlovaDefaultCacheAdapter, AlovaDefaultCacheAdapter>>) => {
     return {
-        getDepartments: () => apiInstance.Get('/departments'),
+        getDepartments: () => apiInstance.Get('/departments', {
+            name: 'departments',
+        }),
 
         getDepartment: (id: number) => apiInstance.Get(`/departments/${id}`),
 
-        createDepartment: (payload: any) => apiInstance.Post('/departments', payload),
+        createDepartment: (payload: Partial<Department>) => apiInstance.Post('/departments', payload, {
+            hitSource: 'departments'
+        }),
 
-        updateDepartment: (id: number, payload: any) => apiInstance.Patch(`/departments/${id}`, payload),
+        updateDepartment: (id: number, payload: Partial<Department>) => apiInstance.Patch(`/departments/${id}`, payload, {
+            hitSource: 'departments'
+        }),
 
-        deleteDepartment: (id: number) => apiInstance.Delete(`/departments/${id}`),
+        deleteDepartment: (id: number) => apiInstance.Delete(`/departments/${id}`, undefined, {
+            hitSource: 'departments'
+        }),
 
         getEmployees: () => apiInstance.Get('/employees'),
 
