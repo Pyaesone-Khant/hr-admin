@@ -1,3 +1,4 @@
+import { LeaveStatus } from "@/constants/leave-status";
 import { Alova, AlovaDefaultCacheAdapter, AlovaGenerics } from "alova";
 import { FetchRequestInit } from "alova/fetch";
 
@@ -31,15 +32,25 @@ export const createApi = (apiInstance: Alova<AlovaGenerics<any, any, FetchReques
 
         deleteEmployee: (id: number) => apiInstance.Delete(`/employees/${id}`),
 
-        getLeaves: () => apiInstance.Get('/leaves'),
+        getLeaves: (status?: LeaveStatus): Promise<Leave[]> => apiInstance.Get('/leaves', {
+            params: {
+                status
+            }
+        }),
 
         getLeave: (id: number) => apiInstance.Get(`/leaves/${id}`),
 
-        createLeave: (payload: any) => apiInstance.Post('/leaves', payload),
+        updateLeaveStatus: (id: number, payload: { status: string }): Promise<Leave> => apiInstance.Patch(`/leaves/${id}`, payload),
 
-        updateLeave: (id: number, payload: { status: string }) => apiInstance.Patch(`/leaves/${id}`, payload),
+        getLeaveTypes: () => apiInstance.Get('/leave-types'),
 
-        deleteLeave: (id: number) => apiInstance.Delete(`/leaves/${id}`),
+        getLeaveType: (id: number) => apiInstance.Get(`/leave-types/${id}`),
+
+        createLeaveType: (payload: Partial<LeaveType>) => apiInstance.Post('/leave-types', payload),
+
+        updateLeaveType: (id: number, payload: Partial<LeaveType>) => apiInstance.Patch(`/leave-types/${id}`, payload),
+
+        deleteLeaveType: (id: number) => apiInstance.Delete(`/leave-types/${id}`),
 
         getPositions: (): Promise<Position[]> => apiInstance.Get('/positions'),
 
