@@ -1,5 +1,8 @@
 import { AntdTable } from "@/components/common";
+import { EyeOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import { ColumnsType } from "antd/es/table";
+import { Link } from "react-router";
 import { useGetEmployees } from "./employeeApi";
 
 export function EmployeesTable() {
@@ -36,6 +39,22 @@ export function EmployeesTable() {
             title: 'Position',
             dataIndex: ['position', 'name'],
             key: 'position',
+        },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (text, record) => (
+                <>
+                    <Link
+                        to={`/employees/${record.id}`}
+                    >
+                        <Button
+                            icon={<EyeOutlined />}
+                        />
+                    </Link>
+                </>
+            ),
+            align: 'center'
         }
     ]
 
@@ -43,7 +62,7 @@ export function EmployeesTable() {
         <>
             <AntdTable
                 columns={columns}
-                dataSource={employees}
+                dataSource={employees as Employee[]}
                 loading={loading}
             />
         </>

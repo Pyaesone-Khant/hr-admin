@@ -10,7 +10,7 @@ export function EmployeePage() {
             className="space-y-6"
         >
             <PageHeader
-                title="Employee page"
+                title="Employees"
             >
                 <Link
                     to={'new'}

@@ -11,7 +11,7 @@ export function UserAvatar({
     className?: string;
 }) {
 
-    const avatarSize = className?.split(" ").find(c => c.startsWith("size-"))?.split("-")[1] ?? "10";
+    const avatarSize = className?.split(" ").find(c => c.startsWith("size-") || c.startsWith("!size-"))?.split("-")[1] ?? "10";
     const iconSize = Math.ceil(Math.floor(parseInt(avatarSize) * 4) / 2.5) + 'px';
     return (
         <Avatar

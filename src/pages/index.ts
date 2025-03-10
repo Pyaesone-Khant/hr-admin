@@ -8,3 +8,5 @@ export * from "./Department/DepartmentPage";
 export * from "./Employee/AddNewEmployeePage";
 export * from "./Employee/EmployeePage";
 
+// positions
+export * from "./Position/PositionPage";

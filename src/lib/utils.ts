@@ -21,3 +21,7 @@ export const slugify = (text: string) => {
 export const formatNRC = (nrc: NRC) => {
     return Object.values(nrc).join('')
 }
+
+export const formatNumber = (number: string | number) => {
+    return new Intl.NumberFormat().format(Number(number))
+}

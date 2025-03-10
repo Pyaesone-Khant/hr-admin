@@ -16,6 +16,19 @@ export const useGetEmployees = () => {
     }
 }
 
+export const useGetEmployee = (id: string) => {
+    const { data, isLoading, error } = useQuery({
+        queryKey: ['employee', id],
+        queryFn: () => ALOVA.getEmployee(id)
+    })
+
+    return {
+        employee: data,
+        loading: isLoading,
+        error
+    }
+}
+
 export const useCreateEmployee = () => {
     const { mutate, isPending, error, isSuccess } = useMutation({
         mutationKey: ['createEmployee'],

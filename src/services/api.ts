@@ -23,11 +23,11 @@ export const createApi = (apiInstance: Alova<AlovaGenerics<any, any, FetchReques
 
         getEmployees: () => apiInstance.Get('/employees'),
 
-        getEmployee: (id: string) => apiInstance.Get(`/employees/${id}`),
+        getEmployee: (id: string): Promise<Employee> => apiInstance.Get(`/employees/${id}`),
 
-        createEmployee: (payload: any): Promise<Employee> => apiInstance.Post('/employees', payload),
+        createEmployee: (payload: Partial<Employee>): Promise<Employee> => apiInstance.Post('/employees', payload),
 
-        updateEmployee: (id: number, payload: any) => apiInstance.Patch(`/employees/${id}`, payload),
+        updateEmployee: (id: number, payload: Partial<Employee>) => apiInstance.Patch(`/employees/${id}`, payload),
 
         deleteEmployee: (id: number) => apiInstance.Delete(`/employees/${id}`),
 
@@ -41,13 +41,13 @@ export const createApi = (apiInstance: Alova<AlovaGenerics<any, any, FetchReques
 
         deleteLeave: (id: number) => apiInstance.Delete(`/leaves/${id}`),
 
-        getPositions: () => apiInstance.Get('/positions'),
+        getPositions: (): Promise<Position[]> => apiInstance.Get('/positions'),
 
         getPosition: (id: number) => apiInstance.Get(`/positions/${id}`),
 
-        createPosition: (payload: any) => apiInstance.Post('/positions', payload),
+        createPosition: (payload: Partial<Position>) => apiInstance.Post('/positions', payload),
 
-        updatePosition: (id: number, payload: any) => apiInstance.Patch(`/positions/${id}`, payload),
+        updatePosition: (id: number, payload: Partial<Position>): Promise<Position> => apiInstance.Patch(`/positions/${id}`, payload),
 
         deletePosition: (id: number) => apiInstance.Delete(`/positions/${id}`),
     };

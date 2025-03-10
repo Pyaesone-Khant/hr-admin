@@ -29,6 +29,9 @@ export function AddNewEmployeeForm() {
             startDate: dayjs().format(REQ_DATE_FORMAT),
             nrc,
         };
+
+        console.log(payload); return;
+
         createEmployee(payload, {
             onSuccess: () => {
                 form.resetFields();

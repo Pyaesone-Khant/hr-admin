@@ -2,10 +2,11 @@ import '@ant-design/v5-patch-for-react-19';
 
 import { queryClient } from '@/constants';
 import { MainLayout } from "@/hoc";
-import { AddNewEmployeePage, DepartmentPage, EmployeePage } from "@/pages";
+import { AddNewEmployeePage, DepartmentPage, EmployeePage, PositionPage } from "@/pages";
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ConfigProvider } from "antd";
 import { createHashRouter, RouterProvider } from "react-router";
+import { EmployeeDetail } from './features/Employee';
 
 function App() {
 	const router = createHashRouter([
@@ -25,10 +26,18 @@ function App() {
 							element: <EmployeePage />
 						},
 						{
+							path: ":id",
+							element: <EmployeeDetail />
+						},
+						{
 							path: "new",
 							element: <AddNewEmployeePage />
 						}
 					]
+				},
+				{
+					path: '/positions',
+					element: <PositionPage />
 				}
 			]
 		},

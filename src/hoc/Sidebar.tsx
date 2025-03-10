@@ -80,7 +80,7 @@ export function Sidebar() {
 
     return (
         <Sider
-            className=" !sticky !top-0 h-[100vh] !bg-black/30 "
+            className=" !sticky !top-0 h-[100vh] !bg-black/30 overflow-auto "
             collapsed={collapsed}
             collapsible
             trigger={null}
