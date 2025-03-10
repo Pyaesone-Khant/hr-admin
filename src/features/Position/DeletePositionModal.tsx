@@ -1,16 +1,16 @@
 import { useDisclosure } from "@/hooks";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
-import { useDeleteDepartment } from "./departmentApi";
+import { useDeletePosition } from "./positionApi";
 
-export function DeleteDepartmentModal({ department }: { department: Department }) {
+export function DeletePositionModal({ position }: { position: Position }) {
 
     const [isOpen, { toggle }] = useDisclosure();
 
-    const { deleteDepartment, loading } = useDeleteDepartment()
+    const { deletePosition, loading } = useDeletePosition()
 
-    const handleDelete = async () => {
-        deleteDepartment(department.id, {
+    const handleDelete = () => {
+        deletePosition(position.id, {
             onSuccess: () => {
                 toggle()
             }
@@ -25,9 +25,10 @@ export function DeleteDepartmentModal({ department }: { department: Department }
                 onClick={toggle}
             />
             <Modal
-                title="Delete Department"
+                title="Delete Position"
                 open={isOpen}
                 onCancel={toggle}
+                okText="Delete"
                 okButtonProps={{
                     danger: true,
                     loading: loading,
@@ -41,11 +42,11 @@ export function DeleteDepartmentModal({ department }: { department: Department }
                 centered
             >
                 <p>
-                    Are you sure you want to delete this department name
+                    Are you sure you want to delete this position name
                     <span
                         className="font-semibold text-dark-indigo mx-1"
                     >
-                        &apos;{department.name}&apos;
+                        &apos;{position.name}&apos;
                     </span>
                     ?
                 </p>

@@ -1,6 +1,8 @@
 import { AntdTable } from "@/components/common"
 import { Space } from "antd"
 import { ColumnsType } from "antd/es/table"
+import { DeletePositionModal } from "./DeletePositionModal"
+import { EditPositionModal } from "./EditPositionModal"
 import { useGetPositions } from "./positionApi"
 
 export function PositionsTable() {
@@ -33,8 +35,12 @@ export function PositionsTable() {
             key: 'actions',
             render: (text, record) => (
                 <Space size="middle">
-                    <a>Edit</a>
-                    <a>Delete</a>
+                    <EditPositionModal
+                        position={record}
+                    />
+                    <DeletePositionModal
+                        position={record}
+                    />
                 </Space>
             ),
             align: 'center'

@@ -1,28 +1,28 @@
 import { useDisclosure } from "@/hooks";
 import { slugify } from "@/lib/utils";
-import { PlusOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal } from "antd";
-import { useCreatePosition } from "./positionApi";
+import { useUpdatePosition } from "./positionApi";
 
-export function AddNewPositionModal() {
+export function EditPositionModal({ position }: { position: Position }) {
 
-    const [form] = Form.useForm();
-    const [isOpen, { toggle }] = useDisclosure()
+    const [isOpen, { toggle }] = useDisclosure();
 
-    const { createPosition, loading } = useCreatePosition();
+    const { updatePosition, loading } = useUpdatePosition();
 
     const onFinish = (values: Partial<Position>) => {
 
         const slug = slugify(values.name!);
-
         const payload = {
             ...values,
             slug
         }
 
-        createPosition(payload, {
+        updatePosition({
+            id: position.id,
+            data: payload
+        }, {
             onSuccess: () => {
-                form.resetFields();
                 toggle();
             }
         })
@@ -31,14 +31,11 @@ export function AddNewPositionModal() {
     return (
         <>
             <Button
-                icon={<PlusOutlined />}
-                type="primary"
+                icon={<EditOutlined />}
                 onClick={toggle}
-            >
-                New Position
-            </Button>
+            />
             <Modal
-                title="Create a new position"
+                title="Edit position"
                 open={isOpen}
                 onCancel={toggle}
                 okText="Save"
@@ -46,7 +43,7 @@ export function AddNewPositionModal() {
                 okButtonProps={{
                     loading: loading,
                     htmlType: 'submit',
-                    form: 'addNewPositionForm'
+                    form: `editPositionForm-${position?.id}`
                 }}
                 cancelButtonProps={{
                     disabled: loading
@@ -54,9 +51,8 @@ export function AddNewPositionModal() {
                 centered
             >
                 <Form
-                    form={form}
                     onFinish={onFinish}
-                    name="addNewPositionForm"
+                    name={`editPositionForm-${position?.id}`}
                     wrapperCol={{
                         span: 16
                     }}
@@ -64,6 +60,7 @@ export function AddNewPositionModal() {
                         span: 6
                     }}
                     className="!pt-4"
+                    initialValues={position}
                 >
                     <Form.Item
                         label="Name"
