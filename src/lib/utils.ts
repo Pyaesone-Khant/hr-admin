@@ -25,3 +25,21 @@ export const formatNRC = (nrc: NRC) => {
 export const formatNumber = (number: string | number) => {
     return new Intl.NumberFormat().format(Number(number))
 }
+
+export const getRandomColor = (key: string | number) => {
+    // Convert the number into a hash
+    let hash = 0;
+    const str = key.toString();
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    // Convert the hash to an RGB color
+    let color = "#";
+    for (let i = 0; i < 3; i++) {
+        const value = (hash >> (i * 8)) & 0xFF;
+        color += ("00" + value.toString(16)).slice(-2);
+    }
+
+    return `bg-[${color}]`;
+}

@@ -2,7 +2,7 @@ import '@ant-design/v5-patch-for-react-19';
 
 import { queryClient } from '@/constants';
 import { MainLayout } from "@/hoc";
-import { AddNewEmployeePage, DepartmentPage, EmployeePage, LeavePage, PositionPage } from "@/pages";
+import { AddNewEmployeePage, Dashboard, DepartmentPage, EmployeePage, LeavePage, PositionPage } from "@/pages";
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ConfigProvider } from "antd";
 import { createHashRouter, RouterProvider } from "react-router";
@@ -14,6 +14,10 @@ function App() {
             path: "/",
             element: <MainLayout />,
             children: [
+                {
+                    index: true,
+                    element: <Dashboard />
+                },
                 {
                     path: '/departments',
                     element: <DepartmentPage />
