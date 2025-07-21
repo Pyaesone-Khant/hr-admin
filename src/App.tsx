@@ -4,11 +4,32 @@ import { queryClient } from '@/constants';
 import { MainLayout } from "@/hoc";
 import { AddNewEmployeePage, Dashboard, DepartmentPage, EmployeePage, LeavePage, PositionPage } from "@/pages";
 import { QueryClientProvider } from '@tanstack/react-query';
-import { ConfigProvider } from "antd";
+import { ConfigProvider, notification } from "antd";
+import { useEffect } from 'react';
 import { createHashRouter, RouterProvider } from "react-router";
+import { Login } from './features/Auth';
 import { EmployeeDetail } from './features/Employee';
+import { useNotificationStore } from './states/zustand/notification';
 
 function App() {
+
+    const [api, contextHolder] = notification.useNotification();
+    const noti = useNotificationStore(state => state.notification);
+
+    useEffect(() => {
+        if (noti && noti.message && noti.type) {
+            api[noti.type]({
+                message: noti.type.charAt(0).toUpperCase() + noti.type.slice(1),
+                description: noti.message,
+                showProgress: true,
+                placement: "top",
+                duration: 3,
+                closable: false,
+            })
+            useNotificationStore.getState().clearNotification();
+        }
+    }, [noti, api])
+
     const router = createHashRouter([
         {
             path: "/",
@@ -49,6 +70,10 @@ function App() {
                 }
             ]
         },
+        {
+            path: "/login",
+            Component: Login
+        }
     ]);
 
     return (
@@ -64,6 +89,7 @@ function App() {
                     }
                 }}
             >
+                {contextHolder}
                 <RouterProvider router={router} />
             </ConfigProvider>
         </QueryClientProvider>

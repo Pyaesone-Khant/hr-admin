@@ -1,6 +1,6 @@
 import { Table, TableProps } from "antd";
 
-interface AntdTableProps<T> extends TableProps<T> {
+interface AntdTableProps<T> extends Omit<TableProps<T>, 'columns' | 'dataSource'> {
     columns: TableProps<T>['columns'],
     dataSource: TableProps<T>['dataSource'],
 }
@@ -15,12 +15,12 @@ export function AntdTable<T>({
             rowKey={'id'}
             {...props}
             columns={columns}
-            dataSource={dataSource}
+            dataSource={dataSource ?? []}
             rowHoverable={false}
             bordered
             size="middle"
             pagination={{
-                size: 'default',
+                size: "default",
                 showSizeChanger: false,
                 pageSize: 10,
             }}

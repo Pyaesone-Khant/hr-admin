@@ -15,7 +15,7 @@ export function AddNewEmployeeForm() {
     const [form] = Form.useForm();
 
     const { departments } = useGetDepartments();
-    const { data: positions } = useRequest(ALOVA.getPositions);
+    const { data: positions } = useRequest(() => ALOVA.getDepartments());
     const { createEmployee, loading } = useCreateEmployee();
 
     const nav = useNavigate();
@@ -29,8 +29,6 @@ export function AddNewEmployeeForm() {
             startDate: dayjs().format(REQ_DATE_FORMAT),
             nrc,
         };
-
-        console.log(payload); return;
 
         createEmployee(payload, {
             onSuccess: () => {

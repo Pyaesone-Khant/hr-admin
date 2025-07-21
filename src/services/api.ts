@@ -4,7 +4,16 @@ import { FetchRequestInit } from "alova/fetch";
 
 export const createApi = (apiInstance: Alova<AlovaGenerics<any, any, FetchRequestInit, Response, Headers, AlovaDefaultCacheAdapter, AlovaDefaultCacheAdapter>>) => {
     return {
-        getDepartments: () => apiInstance.Get('/departments', {
+        // auth
+        login: (payload: { email: string, password: string }): Promise<JWT> => apiInstance.Post('/auth/sign-in', payload, {
+            credentials: "include"
+        }),
+
+        refreshToken: (refreshToken: string): Promise<JWT> => apiInstance.Get('/auth/refresh-token?refreshToken=' + refreshToken, {
+            credentials: "include"
+        }),
+
+        getDepartments: (): Promise<Department[]> => apiInstance.Get('/departments', {
             name: 'departments',
         }),
 
@@ -22,7 +31,7 @@ export const createApi = (apiInstance: Alova<AlovaGenerics<any, any, FetchReques
             hitSource: 'departments'
         }),
 
-        getEmployees: () => apiInstance.Get('/employees'),
+        getEmployees: (): Promise<Employee[]> => apiInstance.Get('/employees'),
 
         getEmployee: (id: string): Promise<Employee> => apiInstance.Get(`/employees/${id}`),
 

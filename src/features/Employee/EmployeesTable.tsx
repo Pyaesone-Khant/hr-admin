@@ -62,7 +62,7 @@ export function EmployeesTable() {
         <>
             <AntdTable
                 columns={columns}
-                dataSource={employees as Employee[]}
+                dataSource={employees ?? []}
                 loading={loading}
             />
         </>

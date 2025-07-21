@@ -53,7 +53,7 @@ export function LeavesTable({ status }: {
         <>
             <AntdTable
                 columns={columns}
-                dataSource={leaves}
+                dataSource={leaves ?? []}
                 loading={loading}
             />
         </>

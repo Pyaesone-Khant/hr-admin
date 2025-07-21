@@ -1,72 +1,14 @@
 import { cn } from "@/lib/utils";
-import { Button, Menu } from "antd";
+import { getJwtToken } from "@/services/getJwtToken";
+import { useUserStore } from "@/states/zustand/user";
+import { Button, Menu, Modal } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { MenuItemType } from "antd/es/menu/interface";
 import { Building2, ChevronLeft, CircleDollarSign, FileUser, LayoutDashboard, LogOut, LucideRockingChair, Settings, Users } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router";
+import { Link, NavLink, useLocation, useNavigate } from "react-router";
 
 const iconSize = "!size-5";
-
-const SidebarLinks: MenuItemType[] = [
-    {
-        key: "1",
-        icon: <LayoutDashboard
-            className={iconSize}
-        />,
-        label: <Link to={'/'} >Dashboard</Link>,
-    },
-    {
-        key: "2",
-        icon: <Building2
-            className={iconSize}
-        />,
-        label: <Link to={'/departments'}>Departments</Link>,
-    },
-    {
-        key: "3",
-        icon: <Users
-            className={iconSize}
-        />,
-        label: <Link to={'/employees'}>Employees</Link>,
-    },
-    {
-        key: "7",
-        icon: <LucideRockingChair
-            className={iconSize}
-        />,
-        label: <Link to={'/positions'}>Positions</Link>,
-    },
-    {
-        key: "4",
-        icon: <FileUser
-            className={iconSize}
-        />,
-        label: <Link to={'/leaves'}>Leaves</Link>,
-    },
-    {
-        key: "5",
-        icon: <CircleDollarSign
-            className={iconSize}
-        />,
-        label: <Link to={'/payroll'}>Payroll</Link>,
-    },
-    {
-        key: "6",
-        icon: <Settings
-            className={iconSize}
-        />,
-        label: <Link to={'/settings'}>Settings</Link>,
-    },
-    {
-        key: '20',
-        icon: <LogOut
-            className={iconSize}
-        />,
-        label: "Logout",
-        danger: true,
-    }
-]
 
 export function Sidebar() {
 
@@ -74,9 +16,82 @@ export function Sidebar() {
     const pathname = useLocation().pathname;
     const [activeKey, setActiveKey] = useState<string[]>(getActiveKey(pathname));
 
+    const [openedLogoutModal, setOpenedLogoutModal] = useState<boolean>(false);
+    const nav = useNavigate();
+
     useEffect(() => {
         setActiveKey(getActiveKey(pathname))
-    }, [pathname])
+    }, [pathname]);
+
+    const SidebarLinks: MenuItemType[] = [
+        {
+            key: "1",
+            icon: <LayoutDashboard
+                className={iconSize}
+            />,
+            label: <Link to={'/'} >Dashboard</Link>,
+        },
+        {
+            key: "2",
+            icon: <Building2
+                className={iconSize}
+            />,
+            label: <Link to={'/departments'}>Departments</Link>,
+        },
+        {
+            key: "3",
+            icon: <Users
+                className={iconSize}
+            />,
+            label: <Link to={'/employees'}>Employees</Link>,
+        },
+        {
+            key: "7",
+            icon: <LucideRockingChair
+                className={iconSize}
+            />,
+            label: <Link to={'/positions'}>Positions</Link>,
+        },
+        {
+            key: "4",
+            icon: <FileUser
+                className={iconSize}
+            />,
+            label: <Link to={'/leaves'}>Leaves</Link>,
+        },
+        {
+            key: "5",
+            icon: <CircleDollarSign
+                className={iconSize}
+            />,
+            label: <Link to={'/payroll'}>Payroll</Link>,
+        },
+        {
+            key: "6",
+            icon: <Settings
+                className={iconSize}
+            />,
+            label: <Link to={'/settings'}>Settings</Link>,
+        },
+        {
+            key: '20',
+            icon: <LogOut
+                className={iconSize}
+            />,
+            label: "Logout",
+            danger: true,
+            onClick: () => setOpenedLogoutModal(true)
+        }
+    ];
+
+    const handleLogout = () => {
+        setOpenedLogoutModal(false);
+        useUserStore.getState().clearJwt();
+        getJwtToken().removeJwtToken();
+        nav("/login", {
+            replace: true
+        });
+    }
 
     return (
         <Sider
@@ -116,6 +131,31 @@ export function Sidebar() {
                     })}
                 />}
             />
+
+            {/* logout modal */}
+            <Modal
+                open={openedLogoutModal}
+                onCancel={() => setOpenedLogoutModal(false)}
+                title="Logout"
+                okButtonProps={{
+                    danger: true,
+                    onClick: handleLogout
+                }}
+                cancelButtonProps={{
+                    type: "text"
+                }}
+                okText="Logout"
+                cancelText="Cancel"
+                centered
+                width={400}
+                closable={false}
+            >
+                <p
+                    className="py-2"
+                >
+                    Are you sure you want to logout?
+                </p>
+            </Modal>
         </Sider>
     )
 }

@@ -4,10 +4,15 @@ import "../styles/global.css";
 // components
 import { Header } from "@/hoc/Header";
 import { Sidebar } from "@/hoc/Sidebar";
+import { useUserStore } from "@/states/zustand/user";
 import { Layout } from "antd";
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 
 export function MainLayout() {
+
+    const jwt = useUserStore(state => state.jwt);
+
+    if (!jwt || !jwt.accessToken) return <Navigate to={"/login"} replace />
 
     return (
         <>

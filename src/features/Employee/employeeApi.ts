@@ -4,7 +4,7 @@ import { ALOVA } from "@/services/alova"
 import { useMutation, useQuery } from "@tanstack/react-query"
 
 export const useGetEmployees = () => {
-    const { data, isLoading, error } = useQuery({
+    const { data, isLoading, error } = useQuery<Employee[], Error, Employee[]>({
         queryKey: ['employees'],
         queryFn: ALOVA.getEmployees
     })

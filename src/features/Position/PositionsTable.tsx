@@ -50,7 +50,7 @@ export function PositionsTable() {
     return (
         <>
             <AntdTable
-                dataSource={positions}
+                dataSource={positions ?? []}
                 loading={loading}
                 columns={columns}
             />

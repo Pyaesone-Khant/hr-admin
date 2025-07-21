@@ -53,7 +53,7 @@ export function DepartmentsTable() {
     return (
         <>
             <AntdTable
-                dataSource={departments as Department[]}
+                dataSource={departments ?? []}
                 columns={columns}
                 loading={loading}
             />

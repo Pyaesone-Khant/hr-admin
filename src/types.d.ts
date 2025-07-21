@@ -57,3 +57,17 @@ interface LeaveType {
     totalDays: number,
     takeableConsecDaysLimit: number
 }
+
+interface User {
+    id: number;
+    name: string;
+    email: string;
+    roles: string[]
+}
+
+interface JWT {
+    accessToken: string;
+    refreshToken: string;
+    expiredAt: string;
+    roles: string[]
+}
